@@ -6,7 +6,6 @@ on:
 jobs:
   build-apk:
     name: Build APKs
-    needs: [validate-release]
     runs-on: ubuntu-latest
 
     env:
