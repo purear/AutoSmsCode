@@ -1,39 +1,14 @@
 name: Build APK
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'  # Semantic version tag, e.g. v3.1.4
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
-  validate-release:
-    name: Validate Release Metadata
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Validate release notes and tag/version consistency
-        run: |
-          chmod +x scripts/check_release_guard.sh
-          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            scripts/check_release_guard.sh "${GITHUB_REF_NAME}"
-          else
-            scripts/check_release_guard.sh
-          fi
-
   build-apk:
     name: Build APKs
     needs: [validate-release]
     runs-on: ubuntu-latest
-    outputs:
-      has_github_native_symbols: ${{ steps.github_symbols.outputs.exists }}
+
     env:
       HAS_RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE != '' }}
     steps:
