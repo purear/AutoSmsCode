@@ -38,7 +38,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.github.tianma8023.xposed.smscode"
+        applicationId = "com.purear.autosmscode"
         val minSdkCodename = minSdkStr.removePrefix("android-")
         val minSdkAsInt = minSdkCodename.toIntOrNull()
         if (minSdkAsInt != null) {
